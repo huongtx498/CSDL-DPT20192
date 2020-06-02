@@ -12,8 +12,8 @@ class CRUD_Dog():
         self.class_names = pickle.load(open(class_name_path, 'rb'))
         self.model, _ = load_model(model_path, self.class_names)
 
-# '/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL_DPT/CSDL-DPT/DPT/find_lostdog/tool/dog_classification_resnet.pth'
-# '/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL_DPT/CSDL-DPT/DPT/find_lostdog/tool/class_names.pkl'
+# '/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/dog_classification_resnet.pth'
+# '/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/class_names.pkl'
 
 
 # GET all dog_type

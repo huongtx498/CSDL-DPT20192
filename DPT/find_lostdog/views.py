@@ -74,8 +74,8 @@ def find_doginfo(request):
     return render(request, 'find_lostdog/posthome.html', {'context': context, 'form': postForm})
 
 
-modelpath = '/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL_DPT/CSDL-DPT/DPT/find_lostdog/tool/dog_classification_resnet.pth'
-classnamepath = '/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL_DPT/CSDL-DPT/DPT/find_lostdog/tool/class_names.pkl'
+modelpath = '/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/dog_classification_resnet.pth'
+classnamepath = '/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/class_names.pkl'
 user = 'admin'
 pw = 'mmx1437cbcd'
 url = 'localhost'

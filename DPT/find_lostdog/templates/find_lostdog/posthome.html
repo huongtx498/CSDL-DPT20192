@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <title>CSDL DPT</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="d-flex justify-content-center">
+            <h1>Form Input</h1>
+        </div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <table class="table table-striped table-bordered">
+                {{form.as_table}}
+            </table>
+            <div class="d-flex flex-row-reverse">
+                <input class="btn btn-primary" type="submit" value="submit" />
+            </div>
+        </form>
+    </div>
+    <div class="container-fluid">
+        <!--style="display: {{display}};" -->
+        <div class="d-flex justify-content-center">
+            <h1>Result</h1>
+        </div>
+        <div>
+            <span>
+                <h2>Post: {{post}}</h2>
+            </span>
+        </div>
+
+    </div>
+</body>
+
+</html>

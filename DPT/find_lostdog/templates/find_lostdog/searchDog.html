@@ -1,0 +1,117 @@
+{% extends "find_lostdog/base_generic.html" %}
+
+{% block content %}
+<div class="col-lg-3">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Tag</h3>
+    </div>
+    <div class="card-body">
+      {% for dog in tag %}
+      <p class="card-text">
+        {{ dog }}
+      </p>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- /.col-md-6 -->
+<div class="col-lg-6">
+  <div class="card card-primary">
+    <div class="card-header">
+      <h3 class="card-title">Tra cứu</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form role="form" enctype="multipart/form-data" action="" method="post">
+      {% csrf_token %}
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="{{form.dogType.id_for_label}}">Loại chó</label>
+              {{ form.dogType }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="{{ form.dogImage.id_for_label}}">Ảnh</label>
+              <div class="input-group">
+                <div class="custom-file">
+                  {{ form.dogImage }}
+                  <label class="custom-file-label" for="{{ form.dogImage.id_for_label }}">Chọn ảnh</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title m-0">Danh sách ảnh</h5>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        {% for img in imgs %}
+        <div class="col-sm-2">
+          <a href="" data-toggle="lightbox" data-title="dog-image" data-gallery="gallery">
+            <img src="" class="img-fluid mb-2" alt="dog image">
+          </a>
+        </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="col-lg-3">
+  <div class="card">
+    <div class="card-header">
+      <h3 class="card-title">Thông tin</h3>
+    </div>
+    <div class="card-body">
+      <p class="card-text">
+        <strong>Chủng loại: {{ dog_type }}</strong>
+
+      </p>
+      <p class="card-text">
+        <strong>Nguồn gốc: {{ origin }}</strong>
+
+      </p>
+      <p class="card-text">
+        <strong>Đặc điểm tính cách: {{ trait }}</strong>
+
+      </p>
+
+      <p class="card-text">
+        <strong>Cân nặng: {{ weight }}</strong>
+
+      </p>
+
+      <p class="card-text">
+        <strong>Chiều cao: {{ height }}</strong>
+
+      </p>
+      <p class="card-text">
+        <strong>Tuổi thọ: {{ longevity }}</strong>
+      </p>
+      <p class="card-text">
+        <strong>Khoảng giá: {{ piece_range }}</strong>
+      </p>
+      <p class="card-text">
+        <strong>Chỗ bán: {{ seller }}</strong>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "find_lostdog/base_generic.html" %}
+
+{% block content %}
+<div class="col-lg-12">
+  <div class="card card-primary">
+    <div class="card-header">
+      <h3 class="card-title">Tra cứu</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form role="form" enctype="multipart/form-data" action="" method="">
+      {% csrf_token %}
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="{{ form.dogImage.id_for_label }}">Ảnh</label>
+              <div class="input-group">
+                <div class="custom-file">
+                  {{ form.dogImage }}
+                  <label class="custom-file-label" for="{{form.dogImage.id_for_label}}">Chọn ảnh</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="{{ form.species.id_for_label }}">Chủng loại</label>
+                  {{ form.species }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="{{ form.weight.id_for_label }}">Cân nặng</label>
+                  {{ form.weight }}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="{{ form.height.id_for_label }}">Chiều cao</label>
+                  {{ form.height }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="{{ form.color.id_for_label }}">Màu lông</label>
+                  {{ form.color }}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for=" form.accessory.id_for_label ">Phụ kiện</label>
+                  {{ form.accessory }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for=" form.location.id_for_label ">Khu vực</label>
+                  {{ form.location }}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for=" form.time.id_for_label ">Thời gian</label>
+                  {{ form.time }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for=" form.status.id_for_label ">Trạng thái</label>
+                  {{ form.status }}
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card" id="result">
+    <div class="card-header">
+      <h5 class="card-title m-0">Danh sách ảnh</h5>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        {% for img in imgs %}
+        <div class="col-sm-2">
+          <a href="" data-toggle="lightbox" data-title="dog-image" data-gallery="gallery">
+            <img src="" class="img-fluid mb-2" alt="dog image">
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

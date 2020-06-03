@@ -47,7 +47,8 @@ class CRUD_Dog():
                 cursor = cnx.cursor()
                 query = ("SELECT * FROM dog_type WHERE type = %s")
                 cursor.execute(query, (type,))
-                result = cursor.fetchall()
+                data = cursor.fetchall()
+                # list_dogs = [row for row in data]
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
                 print("Something is wrong with your user name or password")
@@ -59,7 +60,7 @@ class CRUD_Dog():
             if (cnx.is_connected()):
                 cursor.close()
                 cnx.close()
-            return result
+            return data
 
 # GET Dog By iddog_type
     def _get_dogByID(self, username, pw, url, dbname, id):

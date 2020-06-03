@@ -8,8 +8,7 @@ urlpatterns = [
 ]
 
 urlpatterns = [
-    path('findDog', find_doginfo, name='findPOSTpage'),
-    path('post', index, name='postLostDog'),
+    path('post', addPost, name='postLostDog'),
     path('searchLostDog', searchLostDog, name='searchLostDog'),
     path('', searchDog, name='searchDog'),
 ]

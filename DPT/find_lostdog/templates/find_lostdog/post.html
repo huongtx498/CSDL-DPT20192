@@ -8,7 +8,7 @@
     </div>
     <!-- /.card-header -->
     <!-- form start -->
-    <form role="form" enctype="multipart/form-data" action="" method="">
+    <form role="form" enctype="multipart/form-data" action="" method="POST">
       {% csrf_token %}
       <div class="card-body">
         <div class="row">
@@ -86,10 +86,26 @@
       </div>
       <!-- /.card-body -->
 
-      <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Submit</button>
+      <div class="card-footer d-flex flex-row-reverse">
+        <input class="btn btn-primary" type="submit" value="submit" name="submit" />
       </div>
     </form>
+
+    <!-- {% if submitbutton == "submit" %} -->
+    <div>
+      <div>
+        <h5>Ket qua test</h5>
+      </div>
+      <div>
+        <h5 class="card-title m-0">image: {{image}}</h5>
+      </div>
+      <div>
+        <h5 class="card-title m-0">post :{{post}}</h5>
+      </div>
+
+    </div>
+    <!-- {% endif %} -->
+
   </div>
 
 </div>

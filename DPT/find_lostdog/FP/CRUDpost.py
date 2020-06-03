@@ -11,18 +11,25 @@ class CRUD_Post():
     def __init__(self):
         self.post = []
 
-    # Add a new dog_type
+    def convertToBinaryData(self, filename):
+        # Convert digital data to binary format
+        with open(filename, 'rb') as file:
+            binaryData = file.read()
+        return binaryData
 
-    def _add_post(self, username, pw, url, dbname, post):
+    # Add a new post
+
+    def _add_post(self, username, pw, url, dbname, post, img):
         try:
             cnx = mysql.connector.connect(user=username, password=pw,
                                           host=url, database=dbname)
             if cnx.is_connected():
                 cursor = cnx.cursor()
-                query = ("INSERT INTO Post (id, species, weights, heights, colors, access, area, time, status, img, type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, )")
-                records = [(post.id, post.spiece, post.weights, post.heights, post.colors, post.access,
-                            post.area, post.time, post.status, post.img, post.type), ]
-                cursor.execute(query, records)
+                query = ("INSERT INTO Post (species, weights, heights, colors, access, area, time, status, img, type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, )")
+                records = [(post.spiece, post.weights, post.heights, post.colors, post.access,
+                            post.area, post.time, post.status, img, post.type), ]
+                empPicture = convertToBinaryData(img)
+                result = cursor.execute(query, records)
                 cnx.commit()
 
         except mysql.connector.Error as err:

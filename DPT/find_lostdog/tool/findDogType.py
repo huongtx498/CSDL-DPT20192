@@ -45,14 +45,14 @@ def predict(model, class_names, img):
 
 
 class FindDogType():
-    def __init__(self, model_path, class_name_path):
+    def __init__(self, model_path, class_name_path, username, pw, url, dbname):
         self.types = []
         self.class_names = pickle.load(open(
             class_name_path, 'rb'))
         self.model, _ = load_model(
             model_path, self.class_names)
-        self._get_all_type('admin', 'mmx1437cbcd',
-                           'localhost', 'muti_media_db')
+        self._get_all_type(username, pw,
+                           url, dbname)
 
     def _get_all_type(self, username, pw, url, dbname):
 

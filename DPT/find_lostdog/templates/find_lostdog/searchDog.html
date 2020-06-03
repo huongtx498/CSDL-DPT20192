@@ -30,17 +30,17 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="{{form.dogType.id_for_label}}">Loại chó</label>
-              {{ form.dogType }}
+              <label for="{{form.tag.id_for_label}}">Loại chó</label>
+              {{ form.tag }}
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label for="{{ form.dogImage.id_for_label}}">Ảnh</label>
+              <label for="{{ form.image.id_for_label}}">Ảnh</label>
               <div class="input-group">
                 <div class="custom-file">
-                  {{ form.dogImage }}
-                  <label class="custom-file-label" for="{{ form.dogImage.id_for_label }}">Chọn ảnh</label>
+                  {{ form.image }}
+                  <label class="custom-file-label" for="{{ form.image.id_for_label }}">Chọn ảnh</label>
                 </div>
               </div>
             </div>
@@ -49,8 +49,8 @@
       </div>
       <!-- /.card-body -->
 
-      <div class="card-footer">
-        <button type="submit" class="btn btn-primary">Submit</button>
+      <div class="card-footer d-flex flex-row-reverse">
+        <input class="btn btn-primary" type="submit" value="submit" />
       </div>
     </form>
   </div>
@@ -64,12 +64,38 @@
         {% for img in imgs %}
         <div class="col-sm-2">
           <a href="" data-toggle="lightbox" data-title="dog-image" data-gallery="gallery">
-            <img src="" class="img-fluid mb-2" alt="dog image">
+            <img src="" class="img-fluid mb-2 img-responsive" alt="dog image">
           </a>
         </div>
         {% endfor %}
 
       </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <h5 class="card-title m-0">Ket qua test</h5>
+    </div>
+    <div class="card-body">
+      <div>
+        <h5 class="card-title m-0">context: {{context}}</h5>
+      </div>
+      <div>
+        <h5 class="card-title m-0">path :{{path}}</h5>
+      </div>
+      <!-- <div class="row"> -->
+      <!-- {% for img in imgs %} -->
+      <!-- <div class="col-sm-2">
+          <a href="" data-toggle="lightbox" data-title="dog-image" data-gallery="gallery">
+            <img src="" class="img-fluid mb-2" alt="dog image">
+          </a>
+        </div> -->
+
+      <!-- <img src="{{ image.image.url }}" class="img-fluid mb-2" alt="dog image"> -->
+      <!-- {% endfor %} -->
+
+      <!-- </div> -->
     </div>
   </div>
 

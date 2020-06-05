@@ -44,33 +44,38 @@ db_name = 'muti_media_db'
 
 def searchDog(request):
     list_dogtype = []
-
     if request.method == 'POST':
         dogForm = SearchDogForm(request.POST or None, request.FILES or None)
         if dogForm.is_valid():
             dogForm.save()
+
+        # Lay url anh
+        Dogs = Image_db.objects.latest()
+        dogPath = ("." + str(Dogs.image.url))
+        path = Path(dogPath).resolve()
+
+        # Khoi tao cac doi tuong control
+        compare = FindDogType(modelpath, classnamepath, user, pw, url, db_name)
+        crud_dog = CRUD_Dog(modelpath, classnamepath)
+        crud_post = CRUD_Post()
+
+        # Chuyen anh sang dang binary
+        image_bytes = crud_post.convertToBinaryData(path)
+        image = Image.open(io.BytesIO(image_bytes))
+
+        # Thuc hien va tra ket qua so sanh
+        # results = compare._find_dog_type_from_tag(Dogs.tag)
+        # results = compare._find_dog_type_from_img(image)
+        results = compare.find_dog_type(image, str(Dogs.tag))
+        for result in results:
+            list_dogtype.append(crud_dog._getDogByType(user, pw,
+                                                       url, db_name, result))
+        print(path)
+        print(results)
+        return render(request, 'find_lostdog/searchDog.html', {'listdogs': list_dogtype, 'image_url': path, 'form': dogForm})
     else:
         dogForm = SearchDogForm()
-    Dogs = Image_db.objects.latest()
-    # dogPath = os.path.join("", str(Dogs.image.url))
-    # path = Path(dogPath).resolve()
-    x = "media/images/n02085620_242.jpg"
-    path = Path(x).resolve()
-    compare = FindDogType(modelpath, classnamepath, user, pw, url, db_name)
-    crud_dog = CRUD_Dog(modelpath, classnamepath)
-    crud_post = CRUD_Post()
-
-    image_bytes = crud_post.convertToBinaryData(path)
-    image = Image.open(io.BytesIO(image_bytes))
-    results = compare._find_dog_type_from_tag(Dogs.tag)
-    # results = compare._find_dog_type_from_img(image)
-    # results = compare.find_dog_type(image, str(Dogs.tag))
-    for result in results:
-        list_dogtype.append(crud_dog._getDogByType(user, pw,
-                                                   url, db_name, result))
-    print(results)
-#  'image': Dogs
-    return render(request, 'find_lostdog/searchDog.html', {'context': list_dogtype, 'path': path, 'form': dogForm})
+        return render(request, 'find_lostdog/searchDog.html', {'form': dogForm})
 
 
 # Add new post to find dog
@@ -94,11 +99,14 @@ def addPost(request):
     if request.method == 'POST':
         addForm = PostForm(request.POST, request.FILES)
         if addForm.is_valid():
+
+            # Lay url anh
             image0 = request.FILES['dogImage']
             fs = FileSystemStorage()
             filename = fs.save(image0.name, image0)
             image_url = fs.url(filename)
-            # image_url = addForm.cleaned_data['dogImage']
+
+            # Thong tin khac
             spiece = addForm.cleaned_data.get('species')
             weights = addForm.cleaned_data.get('weight')
             heights = addForm.cleaned_data.get('height')
@@ -108,19 +116,24 @@ def addPost(request):
             time = addForm.cleaned_data.get('time')
             status = addForm.cleaned_data.get('status')
 
-            x = "media/images/n02085620_242.jpg"
-            path = Path(x).resolve()
+            # Duong dan tuyet doi cua anh
+            img_url = ("." + str(image_url))
+            imagePath = Path(img_url).resolve()
+
+            # Tao doi tuong post
             post = Post(spiece, weights, heights, colors,
                         access, area, time, status, type)
             crud_addpost = CRUD_Post()
-            # crud_addpost._add_post(user, pw, url, db_name, post, image_url)
-            print(post)
-            print(image_url)
+
+            # Them post vao csdl Post
+            crud_addpost._add_post(user, pw, url, db_name, post, imagePath)
+            print(post.spiece+" "+post.weights+" "+post.heights)
+            print(imagePath)
+            return render(request, 'find_lostdog/post.html', {'image_url': imagePath, 'post': post, 'form': addForm})
 
     else:
         addForm = PostForm()
-
-    return render(request, 'find_lostdog/post.html', {'image': image_url, 'post': post, 'form': addForm})
+        return render(request, 'find_lostdog/post.html', {'form': addForm})
 
 
 def searchLostDog(request):
@@ -141,11 +154,14 @@ def searchLostDog(request):
     if request.method == 'POST':
         searchLostDogForm = SearchLostDogForm(request.POST, request.FILES)
         if searchLostDogForm.is_valid():
+
+            # Lay url anh
             image0 = request.FILES['dogImage']
             fs = FileSystemStorage()
             filename = fs.save(image0.name, image0)
             image_url = fs.url(filename)
-            # image_url = searchLostDogForm.cleaned_data['dogImage']
+
+            # Lay cac thong tin khac
             spiece = searchLostDogForm.cleaned_data.get('species')
             weights = searchLostDogForm.cleaned_data.get('weight')
             heights = searchLostDogForm.cleaned_data.get('height')
@@ -155,17 +171,27 @@ def searchLostDog(request):
             time = searchLostDogForm.cleaned_data.get('time')
             status = searchLostDogForm.cleaned_data.get('status')
 
-        x = "media/images/n02085620_242.jpg"
-        path = Path(x).resolve()
-        post = Post(spiece, weights, heights, colors,
-                    access, area, time, status, type)
-        crud_addpost = CRUD_Post()
-        # crud_addpost._add_post(user, pw, url, db_name, post, image_url)
-        findpost = FindPost()
-        list_posts = findpost.get_all_post()
-        print(post)
-        print(image_url)
+            # Duong dan tuyet doi cua anh
+            img_url = ("." + str(image_url))
+            imagePath = Path(img_url).resolve()
+
+            # Tao doi tuong searchPost
+            searchPost = Post(spiece, weights, heights, colors,
+                              access, area, time, status, type)
+            crud_addpost = CRUD_Post()
+
+            # Them searchPost vao csdl Post
+            crud_addpost._add_post(
+                user, pw, url, db_name, searchPost, imagePath)
+
+            # Tim kiem va tra ket qua
+            findpost = FindPost()
+            list_posts = findpost.get_all_post()
+            print(searchPost)
+            print(imagePath)
+
+            return render(request, 'find_lostdog/searchLostDog.html', {'searchPost': searchPost, 'listposts': list_posts, 'form': searchLostDogForm})
 
     else:
         searchLostDogForm = PostForm()
-    return render(request, 'find_lostdog/searchLostDog.html', {'post': post, 'list_posts': list_posts, 'form': searchLostDogForm})
+    return render(request, 'find_lostdog/searchLostDog.html', {'form': searchLostDogForm})

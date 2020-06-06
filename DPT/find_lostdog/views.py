@@ -1,5 +1,7 @@
 import io
 import os
+import random
+import matplotlib.image as mpimg
 import mysql.connector
 from django.shortcuts import render, redirect
 from django.conf import settings
@@ -7,12 +9,12 @@ from django.core.files.storage import FileSystemStorage
 from mysql.connector import errorcode
 from .forms import *
 from django.http import HttpResponse
-from find_lostdog.FP.main import FindPost
 from PIL import Image
 from pathlib import Path
 from .forms import *
 from .models import *
 from find_lostdog.tool.findDogType import FindDogType
+from find_lostdog.FP.main import FindPost
 from find_lostdog.tool.CRUDdog import CRUD_Dog
 from find_lostdog.FP.CRUDpost import CRUD_Post
 
@@ -42,7 +44,21 @@ db_name = 'muti_media_db'
 # Search dog from tag and image
 
 
+def getImageByName(dog_type):
+    folder = "media/Images/"+dog_type
+    images = []
+    img1 = random.choice(os.listdir(folder))
+    img1_url = "media/Images/"+dog_type+"/"+img1
+    img2 = random.choice(os.listdir(folder))
+    img2_url = "media/Images/"+dog_type+"/"+img2
+    images.append(img1_url)
+    images.append(img2_url)
+    print(images)
+    return images
+
+
 def searchDog(request):
+    dog = {}
     list_dogtype = []
     if request.method == 'POST':
         dogForm = SearchDogForm(request.POST or None, request.FILES or None)
@@ -68,8 +84,10 @@ def searchDog(request):
         # results = compare._find_dog_type_from_img(image)
         results = compare.find_dog_type(image, str(Dogs.tag))
         for result in results:
-            list_dogtype.append(crud_dog._getDogByType(user, pw,
-                                                       url, db_name, result))
+            dog.info = crud_dog._getDogByType(
+                user, pw, url, db_name, result)  # Thong tin ket qua loai cho
+            dogimage = getImageByName(result)  # Mang 2 hinh anh ket qua
+            list_dogtype.append(dog)   # Dict cua cac loai cho tra ve
         print(path)
         print(results)
         return render(request, 'find_lostdog/searchDog.html', {'listdogs': list_dogtype, 'image_url': path, 'form': dogForm})
@@ -189,6 +207,7 @@ def searchLostDog(request):
             list_posts = findpost.get_all_post()
             print(searchPost)
             print(imagePath)
+            print(list_posts)
 
             return render(request, 'find_lostdog/searchLostDog.html', {'searchPost': searchPost, 'listposts': list_posts, 'form': searchLostDogForm})
 

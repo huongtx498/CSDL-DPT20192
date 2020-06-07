@@ -7,14 +7,14 @@ from django.core.files.storage import FileSystemStorage
 from mysql.connector import errorcode
 from .forms import *
 from django.http import HttpResponse
-from find_lostdog.FP.main import FindPost
+from .FP.main import FindPost
 from PIL import Image
 from pathlib import Path
 from .forms import *
 from .models import *
-from find_lostdog.tool.findDogType import FindDogType
-from find_lostdog.tool.CRUDdog import CRUD_Dog
-from find_lostdog.FP.CRUDpost import CRUD_Post
+from .tool.findDogType import FindDogType
+from .tool.CRUDdog import CRUD_Dog
+from .FP.CRUDpost import CRUD_Post
 
 
 class Post():
@@ -32,8 +32,8 @@ class Post():
 # Create your views here.
 
 
-modelpath = '/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/dog_classification_resnet.pth'
-classnamepath = '/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/class_names.pkl'
+modelpath = r'H:\Subject\He co so du lieu da phuong tien\CSDL-DPT20192\DPT\DPTdog_classification_resnet.pth'
+classnamepath = r'H:\Subject\He co so du lieu da phuong tien\CSDL-DPT20192\DPT\class_names.pkl'
 user = 'admin'
 pw = 'mmx1437cbcd'
 url = 'localhost'

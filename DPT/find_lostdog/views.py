@@ -1,6 +1,7 @@
 import io
 import os
 import random
+import datetime
 import matplotlib.image as mpimg
 import mysql.connector
 from django.shortcuts import render, redirect
@@ -145,7 +146,8 @@ def addPost(request):
 
             # Them post vao csdl Post
             crud_addpost._add_post(user, pw, url, db_name, post, imagePath)
-            print(post.spiece+" "+post.weights+" "+post.heights)
+            print(post.spiece+" "+str(post.weights)+" " +
+                  str(post.heights)+" "+str(post.time))
             print(imagePath)
             return render(request, 'find_lostdog/post.html', {'image_url': imagePath, 'post': post, 'form': addForm})
 

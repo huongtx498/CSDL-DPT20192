@@ -2,6 +2,7 @@ import io
 import os
 import random
 import datetime
+import base64
 import matplotlib.image as mpimg
 import mysql.connector
 from django.shortcuts import render, redirect
@@ -170,6 +171,7 @@ def searchLostDog(request):
     heights = 0
     type = 1  # post tim kiem
     image_url = ''
+    simage = []
 
     if request.method == 'POST':
         searchLostDogForm = SearchLostDogForm(request.POST, request.FILES)
@@ -207,11 +209,19 @@ def searchLostDog(request):
             # Tim kiem va tra ket qua
             findpost = FindPost()
             list_posts = findpost.get_all_post()
+            for i in range(0, list_posts.shape[0]):
+                image = list_posts.loc[i]['Image']
+                simage.append(base64.b64encode(image).decode("utf-8"))
+                # simage = findpost.write_file(image, photo)
+                # simage = Image.open(io.BytesIO(image))
+
+            # print(image)
+
             print(searchPost)
             print(imagePath)
             print(list_posts)
 
-            return render(request, 'find_lostdog/searchLostDog.html', {'searchPost': searchPost, 'listposts': list_posts, 'form': searchLostDogForm})
+            return render(request, 'find_lostdog/searchLostDog.html', {'searchPost': searchPost, 'listposts': list_posts, 'image': simage, 'form': searchLostDogForm})
 
     else:
         searchLostDogForm = PostForm()

@@ -1,4 +1,3 @@
-from django.shortcuts import render
 import mysql.connector
 from mysql.connector import errorcode
 import pymysql
@@ -25,11 +24,11 @@ class CRUD_Post():
                                           host=url, database=dbname)
             if cnx.is_connected():
                 cursor = cnx.cursor()
-                query = ("INSERT INTO Post (species, weights, heights, colors, access, area, time, status, img, type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, )")
-                records = [(post.spiece, post.weights, post.heights, post.colors, post.access,
-                            post.area, post.time, post.status, img, post.type), ]
+                query = "INSERT INTO Post (species, weights, heights, colors, access, area, time, status, img, type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
                 empPicture = self.convertToBinaryData(img)
-                result = cursor.executemany(query, records)
+                records = (post.spiece, post.weights, post.heights, post.colors, post.access,
+                           post.area, post.time, post.status, empPicture, post.type)
+                result = cursor.execute(query, records)
                 cnx.commit()
 
         except mysql.connector.Error as err:

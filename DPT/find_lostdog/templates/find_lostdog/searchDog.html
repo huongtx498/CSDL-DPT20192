@@ -1,5 +1,5 @@
 {% extends "find_lostdog/base_generic.html" %}
-
+{% load static %}
 {% block content %}
 <div class="col-lg-3">
   <div class="card">
@@ -84,6 +84,10 @@
       <div>
         <h5 class="card-title m-0">URL anh tai len :{{image_url}}</h5>
       </div>
+      <div>
+        <div>Anh:</div>
+        <img src="{{ MEDIA_URL }}Images/n02085620-Chihuahua/n02085620_477.jpg" class="img-fluid mb-2" alt="dog image">
+      </div>
       <!-- <div class="row"> -->
       <!-- {% for img in imgs %} -->
       <!-- <div class="col-sm-2">
@@ -92,7 +96,7 @@
           </a>
         </div> -->
 
-      <!-- <img src="{{ image.image.url }}" class="img-fluid mb-2" alt="dog image"> -->
+
       <!-- {% endfor %} -->
 
       <!-- </div> -->

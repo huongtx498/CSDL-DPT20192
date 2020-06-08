@@ -8,7 +8,7 @@
     </div>
     <!-- /.card-header -->
     <!-- form start -->
-    <form role="form" enctype="multipart/form-data" action="" method="">
+    <form role="form" enctype="multipart/form-data" action="" method="POST">
       {% csrf_token %}
       <div class="card-body">
         <div class="row">
@@ -105,6 +105,9 @@
         </div>
         {% endfor %}
       </div>
+    </div>
+    <div>
+      list post : {{listposts}}
     </div>
   </div>
 

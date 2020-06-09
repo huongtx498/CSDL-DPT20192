@@ -16,6 +16,11 @@ class CRUD_Post():
             binaryData = file.read()
         return binaryData
 
+    def write_file(self, data, filename):
+        # Convert binary data to proper format and write it on folder
+        with open(filename, 'wb') as file:
+            file.write(data)
+
     # Add a new post
 
     def _add_post(self, username, pw, url, dbname, post, img):

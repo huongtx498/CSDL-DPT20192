@@ -26,10 +26,14 @@ class FindPost():
         outputs['Area'] = [x[6] for x in similar_post_list[:, 0]]
         outputs['Time'] = [x[7] for x in similar_post_list[:, 0]]
         outputs['Status'] = [x[8] for x in similar_post_list[:, 0]]
+        outputs['Image'] = [x[9] for x in similar_post_list[:, 0]]
         outputs['Similarity Rate'] = [x for x in similar_post_list[:, 1]]
         print(outputs)
         return outputs
 
 
 # FindPost = FindPost()
-# FindPost.get_all_post()
+# output = FindPost.get_all_post()
+# image = outputs.loc[0]['Image']
+# print(image)
+# img = Image.open(io.BytesIO(image)).show()

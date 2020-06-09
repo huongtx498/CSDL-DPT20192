@@ -46,12 +46,12 @@ db_name = 'muti_media_db'
 
 
 def getImageByName(dog_type):
-    folder = "media/Images/"+dog_type
+    folder = "media/images/"+dog_type
     images = []
     img1 = random.choice(os.listdir(folder))
-    img1_url = "media/Images/"+dog_type+"/"+img1
+    img1_url = "media/images/"+dog_type+"/"+img1
     img2 = random.choice(os.listdir(folder))
-    img2_url = "media/Images/"+dog_type+"/"+img2
+    img2_url = "media/images/"+dog_type+"/"+img2
     images.append(img1_url)
     images.append(img2_url)
     print(images)
@@ -91,7 +91,7 @@ def searchDog(request):
             list_dogtype.append(dog)   # Dict cua cac loai cho tra ve
         print(path)
         print(results)
-        return render(request, 'find_lostdog/searchDog.html', {'listdogs': list_dogtype, 'image_url': path, 'form': dogForm})
+        return render(request, 'find_lostdog/searchDog.html', {'listdogs': list_dogtype, 'image_urls': dogimage, 'form': dogForm})
     else:
         dogForm = SearchDogForm()
         return render(request, 'find_lostdog/searchDog.html', {'form': dogForm})

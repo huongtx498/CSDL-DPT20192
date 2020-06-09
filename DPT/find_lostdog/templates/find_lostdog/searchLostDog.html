@@ -22,6 +22,7 @@
                 </div>
               </div>
             </div>
+            <img id="image" style="height: 150px; width: 150px;"/>
           </div>
           <div class="col-md-9">
             <div class="row">
@@ -112,4 +113,18 @@
   </div>
 
 </div>
+
+<script>
+  document.getElementById("id_dogImage").onchange = function () {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        // get loaded data and render thumbnail.
+        document.getElementById("image").src = e.target.result;
+    };
+
+    // read the image file as a data URL.
+    reader.readAsDataURL(this.files[0]);
+  };
+</script>
 {% endblock %}

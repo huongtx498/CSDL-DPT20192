@@ -14,16 +14,16 @@ class DogInfo(forms.ModelForm):
         fields = ['tag', 'image']
 
 
-class Post(forms.Form):
-    specie = forms.CharField(label="Giong cho: ", max_length=100)
-    weight = forms.CharField(label="Can nang: ", max_length=100)
-    height = forms.CharField(label="Chieu cao: ", max_length=100)
-    color = forms.CharField(label="Mau sac: ", max_length=100)
-    access = forms.ChoiceField(label="Phu kien: ", choices=PK)
-    area = forms.ChoiceField(label="Khu vuc: ", choices=KV)
-    time = forms.CharField(label="Thoi gian: ", max_length=100)
-    status = forms.CharField(label="Trang thai: ", max_length=100)
-    image = forms.ImageField(label="Hinh anh: ")
+# class Post(forms.Form):
+#     specie = forms.CharField(label="Giong cho: ", max_length=100)
+#     weight = forms.CharField(label="Can nang: ", max_length=100)
+#     height = forms.CharField(label="Chieu cao: ", max_length=100)
+#     color = forms.CharField(label="Mau sac: ", max_length=100)
+#     access = forms.ChoiceField(label="Phu kien: ", choices=PK)
+#     area = forms.ChoiceField(label="Khu vuc: ", choices=KV)
+#     time = forms.CharField(label="Thoi gian: ", max_length=100)
+#     status = forms.CharField(label="Trang thai: ", max_length=100)
+#     image = forms.ImageField(label="Hinh anh: ")
 
 
 class SearchDogForm(forms.ModelForm):

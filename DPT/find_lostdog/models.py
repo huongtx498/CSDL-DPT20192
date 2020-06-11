@@ -3,8 +3,8 @@ from django.db import models
 
 
 class Image_db(models.Model):
-    tag = models.CharField(max_length=50)
-    image = models.FileField(upload_to='images/')
+    tag = models.CharField(max_length=50,blank=True, null=True)
+    image = models.ImageField(upload_to='images/', blank=True)
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
 
@@ -20,7 +20,7 @@ class Image_addPost(models.Model):
     color = models.CharField(max_length=100)
     accessory = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
-    time = models.DateField(max_length=100)
+    time = models.DateTimeField(max_length=100)
     status = models.CharField(max_length=100)
     create = models.DateTimeField(auto_now_add=True)
 
@@ -36,7 +36,7 @@ class Image_searchPost(models.Model):
     color = models.CharField(max_length=100)
     accessory = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
-    time = models.DateField(max_length=100)
+    time = models.DateTimeField(max_length=100)
     status = models.CharField(max_length=100)
     create = models.DateTimeField(auto_now_add=True)
 

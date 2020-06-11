@@ -112,11 +112,18 @@ class FindDogType():
 
 
 if __name__ == '__main__':
-    dog_type = FindDogType('', '', '')
+    modelpath = r'H:\Subject\He co so du lieu da phuong tien\CSDL-DPT20192\DPT\dog_classification_resnet.pth'
+    classnamepath = r'H:\Subject\He co so du lieu da phuong tien\CSDL-DPT20192\DPT\class_names.pkl'
+    user = 'admin'
+    pw = 'mmx1437cbcd'
+    url = 'localhost'
+    db_name = 'muti_media_db'
+    dog_type = FindDogType(modelpath, classnamepath, user, pw, url, db_name)
+    # dog_type = FindDogType('', '', '')
 
     from PIL import Image
     import io
-    with open("..\\dataset\\val\\n02085620-Chihuahua\\n02085620_588.jpg", 'rb') as f:
+    with open(r"H:\Subject\He co so du lieu da phuong tien\CSDL-DPT20192\DPT\media\images\n02085620-Chihuahua\n02085620_588.jpg", 'rb') as f:
         image_bytes = f.read()
         image = Image.open(io.BytesIO(image_bytes))
         typ_image = dog_type._find_dog_type_from_img(image)
@@ -124,5 +131,5 @@ if __name__ == '__main__':
         typ = dog_type._find_dog_type_from_tag('Chiuahua')
         print(typ)
 
-        intersection = dog_type.find_dog_type(image, 'Chiuahua')
+        intersection = dog_type.find_dog_type(None, 'Chiuahua')
         print(intersection)

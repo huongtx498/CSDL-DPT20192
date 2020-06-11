@@ -14,11 +14,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
   {% load static %} 
   <!-- <link rel="stylesheet" href="{% static 'css/styles.css' %}">  -->
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'find_lostdog/css/all.min.css' %}">
   <!-- Theme style -->
-  <link rel="stylesheet" href="{% static 'css/adminlte.min.css' %}">
+  <link rel="stylesheet" href="{% static 'find_lostdog/css/adminlte.min.css' %}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <style>
+    .bg-img {
+      background-image: url('{{ STATIC_URL }}static/find_lostdog/image/paper.jpg');
+      background-repeat:no-repeat;
+      background-size:100%;
+
+    }
+  </style>
 </head>
 <body class="hold-transition layout-top-nav">
 <div class="wrapper">
@@ -55,7 +63,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.navbar -->
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper bg-img">
     <!-- Content Header (Page header) -->
     <div class="content-header">
       
@@ -76,7 +84,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- /.content-wrapper -->
 
   <!-- Main Footer -->
-  <footer class="main-footer">
+  <footer class="main-footer bg-gray-dark">
     <!-- Default to the left -->
     <strong>BTL nhóm 6</strong>
   </footer>
@@ -86,10 +94,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED SCRIPTS -->
 
 <!-- jQuery -->
-<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'find_lostdog/js/jquery.min.js' %}"></script>
 <!-- Bootstrap 4 -->
-<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'find_lostdog/js/bootstrap.bundle.min.js' %}"></script>
 <!-- AdminLTE App -->
-<script src="{% static 'js/adminlte.min.js' %}"></script>
+<script src="{% static 'find_lostdog/js/adminlte.min.js' %}"></script>
 </body>
 </html>

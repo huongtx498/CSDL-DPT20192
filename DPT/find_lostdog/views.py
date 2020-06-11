@@ -49,50 +49,60 @@ db_name = 'muti_media_db'
 def getImageByName(dog_type):
     folder = "media/images/"+dog_type
     images = []
-    img1 = random.choice(os.listdir(folder))
-    img1_url = "media/images/"+dog_type+"/"+img1
-    img2 = random.choice(os.listdir(folder))
-    img2_url = "media/images/"+dog_type+"/"+img2
-    images.append(img1_url)
-    images.append(img2_url)
-    print(images)
+    for i in range(6):
+        img = random.choice(os.listdir(folder))
+        img_url = "media/images/"+dog_type+"/"+img
+        images.append(img_url)
+    # print(images)
     return images
 
 
 def searchDog(request):
-    dog = {}
     list_dogtype = []
+    list_dogimage = []
     if request.method == 'POST':
         dogForm = SearchDogForm(request.POST or None, request.FILES or None)
         if dogForm.is_valid():
             dogForm.save()
 
-        # Lay url anh
-        Dogs = Image_db.objects.latest()
-        dogPath = ("." + str(Dogs.image.url))
-        path = Path(dogPath).resolve()
-
         # Khoi tao cac doi tuong control
         compare = FindDogType(modelpath, classnamepath, user, pw, url, db_name)
         crud_dog = CRUD_Dog(modelpath, classnamepath)
         crud_post = CRUD_Post()
+        
+        # Lay url anh
+        Dogs = Image_db.objects.latest()
 
-        # Chuyen anh sang dang binary
-        image_bytes = crud_post.convertToBinaryData(path)
-        image = Image.open(io.BytesIO(image_bytes))
+        if bool(Dogs.image) == True:
+            dogPath = ("." + str(Dogs.image.url))
+            path = Path(dogPath).resolve()
+            # Chuyen anh sang dang binary
+            image_bytes = crud_post.convertToBinaryData(path)
+            image = Image.open(io.BytesIO(image_bytes))
 
-        # Thuc hien va tra ket qua so sanh
-        # results = compare._find_dog_type_from_tag(Dogs.tag)
-        # results = compare._find_dog_type_from_img(image)
-        results = compare.find_dog_type(image, str(Dogs.tag))
+            if bool(Dogs.tag) == False:
+                results = compare._find_dog_type_from_img(image)
+            else:
+                results = compare.find_dog_type(image, str(Dogs.tag))
+        elif bool(Dogs.tag) == True:
+            results = compare._find_dog_type_from_tag(str(Dogs.tag))
+
+        print(results)
         for result in results:
             dog = crud_dog._getDogByType(
                 user, pw, url, db_name, result)  # Thong tin ket qua loai cho
             dogimage = getImageByName(result)  # Mang 2 hinh anh ket qua
-            list_dogtype.append(dog)   # Dict cua cac loai cho tra ve
-        print(path)
-        print(results)
-        return render(request, 'find_lostdog/searchDog.html', {'listdogs': list_dogtype, 'image_urls': dogimage, 'form': dogForm})
+            # list_dogtype += dog   # Dict cua cac loai cho tra ve
+            ldog = list(dog[0])
+            ldog[1] = ldog[1].split("-")[1]
+            temp = {}
+            temp["content"] = ldog
+            temp["url"] = dogimage
+            list_dogtype.append(temp)
+            
+        print(list_dogtype)
+        first_dog = list_dogtype.pop(0)
+        return render(request, 'find_lostdog/searchDog.html', {'listdogs': list_dogtype, 'first_dog': first_dog, 'form': dogForm})
     else:
         dogForm = SearchDogForm()
         return render(request, 'find_lostdog/searchDog.html', {'form': dogForm})
@@ -102,7 +112,7 @@ def searchDog(request):
 
 
 def addPost(request):
-    submitbutton = request.POST.get("submit")
+    # submitbutton = request.POST.get("submit")
     image = ''
     image0 = ''
     spiece = ''
@@ -119,38 +129,39 @@ def addPost(request):
     if request.method == 'POST':
         addForm = PostForm(request.POST, request.FILES)
         if addForm.is_valid():
+            addForm.save()
 
-            # Lay url anh
-            image0 = request.FILES['dogImage']
-            fs = FileSystemStorage()
-            filename = fs.save(image0.name, image0)
-            image_url = fs.url(filename)
+        # Lay url anh
+        image0 = request.FILES['dogImage']
+        fs = FileSystemStorage()
+        filename = fs.save(image0.name, image0)
+        image_url = fs.url(filename)
 
-            # Thong tin khac
-            spiece = addForm.cleaned_data.get('species')
-            weights = addForm.cleaned_data.get('weight')
-            heights = addForm.cleaned_data.get('height')
-            colors = addForm.cleaned_data.get('color')
-            access = addForm.cleaned_data.get('accessory')
-            area = addForm.cleaned_data.get('location')
-            time = addForm.cleaned_data.get('time')
-            status = addForm.cleaned_data.get('status')
+        # Thong tin khac
+        spiece = addForm.cleaned_data.get('species')
+        weights = addForm.cleaned_data.get('weight')
+        heights = addForm.cleaned_data.get('height')
+        colors = addForm.cleaned_data.get('color')
+        access = addForm.cleaned_data.get('accessory')
+        area = addForm.cleaned_data.get('location')
+        time = addForm.cleaned_data.get('time')
+        status = addForm.cleaned_data.get('status')
 
-            # Duong dan tuyet doi cua anh
-            img_url = ("." + str(image_url))
-            imagePath = Path(img_url).resolve()
+        # Duong dan tuyet doi cua anh
+        img_url = ("." + str(image_url))
+        imagePath = Path(img_url).resolve()
 
-            # Tao doi tuong post
-            post = Post(spiece, weights, heights, colors,
-                        access, area, time, status, type)
-            crud_addpost = CRUD_Post()
+        # Tao doi tuong post
+        post = Post(spiece, weights, heights, colors,
+                    access, area, time, status, type)
+        crud_addpost = CRUD_Post()
 
-            # Them post vao csdl Post
-            crud_addpost._add_post(user, pw, url, db_name, post, imagePath)
-            print(post.spiece+" "+str(post.weights)+" " +
-                  str(post.heights)+" "+str(post.time))
-            print(imagePath)
-            return render(request, 'find_lostdog/post.html', {'image_url': imagePath, 'post': post, 'form': addForm})
+        # Them post vao csdl Post
+        crud_addpost._add_post(user, pw, url, db_name, post, imagePath)
+        print(post.spiece+" "+str(post.weights)+" " +
+                str(post.heights)+" "+str(post.time))
+        print(imagePath)
+        return render(request, 'find_lostdog/post.html', {'image_url': imagePath, 'post': post, 'form': addForm})
 
     else:
         addForm = PostForm()
@@ -176,53 +187,57 @@ def searchLostDog(request):
     if request.method == 'POST':
         searchLostDogForm = SearchLostDogForm(request.POST, request.FILES)
         if searchLostDogForm.is_valid():
+            searchLostDogForm.save()
+        # Lay url anh
+        image0 = request.FILES['dogImage']
+        fs = FileSystemStorage()
+        filename = fs.save(image0.name, image0)
+        image_url = fs.url(filename)
 
-            # Lay url anh
-            image0 = request.FILES['dogImage']
-            fs = FileSystemStorage()
-            filename = fs.save(image0.name, image0)
-            image_url = fs.url(filename)
+        # Lay cac thong tin khac
+        spiece = searchLostDogForm.cleaned_data.get('species')
+        weights = searchLostDogForm.cleaned_data.get('weight')
+        heights = searchLostDogForm.cleaned_data.get('height')
+        colors = searchLostDogForm.cleaned_data.get('color')
+        access = searchLostDogForm.cleaned_data.get('accessory')
+        area = searchLostDogForm.cleaned_data.get('location')
+        time = searchLostDogForm.cleaned_data.get('time')
+        status = searchLostDogForm.cleaned_data.get('status')
 
-            # Lay cac thong tin khac
-            spiece = searchLostDogForm.cleaned_data.get('species')
-            weights = searchLostDogForm.cleaned_data.get('weight')
-            heights = searchLostDogForm.cleaned_data.get('height')
-            colors = searchLostDogForm.cleaned_data.get('color')
-            access = searchLostDogForm.cleaned_data.get('accessory')
-            area = searchLostDogForm.cleaned_data.get('location')
-            time = searchLostDogForm.cleaned_data.get('time')
-            status = searchLostDogForm.cleaned_data.get('status')
+        # Duong dan tuyet doi cua anh
+        img_url = ("." + str(image_url))
+        imagePath = Path(img_url).resolve()
 
-            # Duong dan tuyet doi cua anh
-            img_url = ("." + str(image_url))
-            imagePath = Path(img_url).resolve()
+        # Tao doi tuong searchPost
+        searchPost = Post(spiece, weights, heights, colors,
+                            access, area, time, status, type)
+        crud_addpost = CRUD_Post()
 
-            # Tao doi tuong searchPost
-            searchPost = Post(spiece, weights, heights, colors,
-                              access, area, time, status, type)
-            crud_addpost = CRUD_Post()
+        # Them searchPost vao csdl Post
+        crud_addpost._add_post(
+            user, pw, url, db_name, searchPost, imagePath)
 
-            # Them searchPost vao csdl Post
-            crud_addpost._add_post(
-                user, pw, url, db_name, searchPost, imagePath)
+        # Tim kiem va tra ket qua
+        findpost = FindPost()
+        list_posts = findpost.get_all_post()
+        list_all = list_posts.values.tolist()
+        # print(list_all)
 
-            # Tim kiem va tra ket qua
-            findpost = FindPost()
-            list_posts = findpost.get_all_post()
-            for i in range(0, list_posts.shape[0]):
-                image = list_posts.loc[i]['Image']
-                simage.append(base64.b64encode(image).decode("utf-8"))
-                # simage = findpost.write_file(image, photo)
-                # simage = Image.open(io.BytesIO(image))
+        for i in range(0, len(list_all)):
+            # image = list_posts.loc[i]['Image']
+            # simage.append(base64.b64encode(image).decode("utf-8"))
+            list_all[i][9] = base64.b64encode(list_all[i][9]).decode("utf-8")
+            # simage = findpost.write_file(image, photo)
+            # simage = Image.open(io.BytesIO(image))
 
-            # print(image)
+        # print(image)
 
-            print(searchPost)
-            print(imagePath)
-            print(list_posts)
+        print(searchPost)
+        print(imagePath)
+        print(list_posts)
 
-            return render(request, 'find_lostdog/searchLostDog.html', {'searchPost': searchPost, 'listposts': list_posts, 'image': simage, 'form': searchLostDogForm})
+        return render(request, 'find_lostdog/searchLostDog.html', {'searchPost': searchPost, 'listposts': list_all, 'image': simage, 'form': searchLostDogForm})
 
     else:
         searchLostDogForm = PostForm()
-    return render(request, 'find_lostdog/searchLostDog.html', {'form': searchLostDogForm})
+        return render(request, 'find_lostdog/searchLostDog.html', {'form': searchLostDogForm})

@@ -1,20 +1,8 @@
 {% extends "find_lostdog/base_generic.html" %}
 {% load static %}
 {% block content %}
-<div class="col-lg-3">
-  <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">Tag</h3>
-    </div>
-    <div class="card-body">
-      {% for dog in tag %}
-      <p class="card-text">
-        {{ dog }}
-      </p>
-      {% endfor %}
-    </div>
-  </div>
-</div>
+
+<div class="col-lg-3"></div>
 
 <!-- /.col-md-6 -->
 <div class="col-lg-6">
@@ -29,10 +17,7 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-6">
-            <div class="form-group">
-              <label for="{{form.tag.id_for_label}}">Loại chó</label>
-              {{ form.tag }}
-            </div>
+            <img id="image" style="height: 150px; width: 150px;"/>
           </div>
           <div class="col-md-6">
             <div class="form-group">
@@ -43,6 +28,10 @@
                   <label class="custom-file-label" for="{{ form.image.id_for_label }}">Chọn ảnh</label>
                 </div>
               </div>
+            </div>
+            <div class="form-group">
+              <label for="{{form.tag.id_for_label}}">Loại chó</label>
+              {{ form.tag }}
             </div>
           </div>
         </div>
@@ -55,93 +44,165 @@
     </form>
   </div>
 
-  <div class="card">
-    <div class="card-header">
-      <h5 class="card-title m-0">Danh sách ảnh</h5>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        {% for img in imgs %}
-        <div class="col-sm-2">
-          <a href="" data-toggle="lightbox" data-title="dog-image" data-gallery="gallery">
-            <img src="" class="img-fluid mb-2 img-responsive" alt="dog image">
-          </a>
-        </div>
-        {% endfor %}
-
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header">
-      <h5 class="card-title m-0">Ket qua test</h5>
-    </div>
-    <div class="card-body">
-      <div>
-        <h5 class="card-title m-0">DS Loai Cho: {{listdogs}}</h5>
-      </div>
-      <div>
-        <h5 class="card-title m-0">URL anh tai len :{{image_url}}</h5>
-      </div>
-      <div>
-        <div>Anh:</div>
-        <img src="{{ MEDIA_URL }}Images/n02085620-Chihuahua/n02085620_477.jpg" class="img-fluid mb-2" alt="dog image">
-      </div>
-      <!-- <div class="row"> -->
-      <!-- {% for img in imgs %} -->
-      <!-- <div class="col-sm-2">
-          <a href="" data-toggle="lightbox" data-title="dog-image" data-gallery="gallery">
-            <img src="" class="img-fluid mb-2" alt="dog image">
-          </a>
-        </div> -->
-
-
-      <!-- {% endfor %} -->
-
-      <!-- </div> -->
-    </div>
-  </div>
-
 </div>
 <div class="col-lg-3">
-  <div class="card">
-    <div class="card-header">
-      <h3 class="card-title">Thông tin</h3>
-    </div>
-    <div class="card-body">
-      <p class="card-text">
-        <strong>Chủng loại: {{ dog_type }}</strong>
+  
+</div>
 
-      </p>
-      <p class="card-text">
-        <strong>Nguồn gốc: {{ origin }}</strong>
-
-      </p>
-      <p class="card-text">
-        <strong>Đặc điểm tính cách: {{ trait }}</strong>
-
-      </p>
-
-      <p class="card-text">
-        <strong>Cân nặng: {{ weight }}</strong>
-
-      </p>
-
-      <p class="card-text">
-        <strong>Chiều cao: {{ height }}</strong>
-
-      </p>
-      <p class="card-text">
-        <strong>Tuổi thọ: {{ longevity }}</strong>
-      </p>
-      <p class="card-text">
-        <strong>Khoảng giá: {{ piece_range }}</strong>
-      </p>
-      <p class="card-text">
-        <strong>Chỗ bán: {{ seller }}</strong>
-      </p>
+{% if first_dog %}
+<div class="card card-primary card-outline">
+  <div class="card-header">
+    <h3 class="card-title">
+      <i class="fas fa-edit"></i>
+      Kết quả
+    </h3>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-2 col-sm-2">
+        <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
+          {% load custom_tag %}
+          <a class="nav-link active" id="vert-tabs-{{ first_dog.content.1 }}-tab" data-toggle="pill" href="#vert-tabs-{{ first_dog.content.1 }}" role="tab" aria-controls="vert-tabs-{{ first_dog.content.1 }}" aria-selected="true">{{ first_dog.content.1 }}</a>
+          {% for dog in listdogs %}
+          <a class="nav-link" id="vert-tabs-{{ dog.content.1 }}-tab" data-toggle="pill" href="#vert-tabs-{{ dog.content.1 }}" role="tab" aria-controls="vert-tabs-{{ dog.content.1 }}" aria-selected="false">{{ dog.content.1 }}</a>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-10 col-sm-10">
+        <div class="tab-content" id="vert-tabs-tabContent">
+          <div class="tab-pane text-left fade show active" id="vert-tabs-{{first_dog.content.1}}" role="tabpanel" aria-labelledby="vert-tabs-{{first_dog.content.1}}-tab">
+            <div class="row">
+              <div class="col-7 col-sm-7">
+                <div class="row">
+                  {% for img in first_dog.url %}
+                  <div class="col-sm-4">
+                    <img src="{{ img }}" class="img-fluid img-thumbnail" style="height: 150px; width: 150px;" alt="dog image">
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="col-5 col-sm-5">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Thông tin</h3>
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text">
+                      <strong>Chủng loại: </strong>
+                      {{ first_dog.content.1 }}
+                    </p>
+                    <p class="card-text">
+                      <strong>Nguồn gốc:</strong>
+                      {{ first_dog.content.2 }}
+                    </p>
+                    <p class="card-text">
+                      <strong>Đặc điểm tính cách:</strong>
+                      {{ first_dog.content.3 }}
+                    </p>
+              
+                    <p class="card-text">
+                      <strong>Cân nặng:</strong>
+                      {{ first_dog.content.7 }}
+                    </p>
+              
+                    <p class="card-text">
+                      <strong>Chiều cao:</strong>
+                      {{ first_dog.content.6 }}
+                    </p>
+                    <p class="card-text">
+                      <strong>Tuổi thọ:</strong>
+                      {{ first_dog.content.4 }}
+                    </p>
+                    <p class="card-text">
+                      <strong>Khoảng giá:</strong>
+                      {{ first_dog.content.5 }}
+                    </p>
+                    <p class="card-text">
+                      <strong>Chỗ bán:</strong>
+                      {{ first_dog.content.9 }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% for dog in listdogs %}
+          <div class="tab-pane fade" id="vert-tabs-{{dog.content.1}}" role="tabpanel" aria-labelledby="vert-tabs-{{dog.content.1}}-tab">
+            <div class="row">
+              <div class="col-7 col-sm-7">
+                <div class="row">
+                  {% for img in dog.url %}
+                  <div class="col-sm-4">
+                    <img src="{{ img }}" class="img-fluid img-thumbnail" style="height: 150px; width: 150px;" alt="dog image">
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="col-5 col-sm-5">
+                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">Thông tin</h3>
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text">
+                      <strong>Chủng loại: </strong>
+                      {{ dog.content.1 }}
+                    </p>
+                    <p class="card-text">
+                      <strong>Nguồn gốc:</strong>
+                      {{ dog.content.2 }}
+                    </p>
+                    <p class="card-text">
+                      <strong>Đặc điểm tính cách:</strong>
+                      {{ dog.content.3 }}
+                    </p>
+              
+                    <p class="card-text">
+                      <strong>Cân nặng:</strong>
+                      {{ dog.content.7 }}
+                    </p>
+              
+                    <p class="card-text">
+                      <strong>Chiều cao:</strong>
+                      {{ dog.content.6 }}
+                    </p>
+                    <p class="card-text">
+                      <strong>Tuổi thọ:</strong>
+                      {{ dog.content.4 }}
+                    </p>
+                    <p class="card-text">
+                      <strong>Khoảng giá:</strong>
+                      {{ dog.content.5 }}
+                    </p>
+                    <p class="card-text">
+                      <strong>Chỗ bán:</strong>
+                      {{ dog.content.9 }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        
+      </div>
     </div>
   </div>
+  <!-- /.card -->
 </div>
+{% endif %}
+<script>
+  document.getElementById("id_image").onchange = function () {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        // get loaded data and render thumbnail.
+        document.getElementById("image").src = e.target.result;
+    };
+
+    // read the image file as a data URL.
+    reader.readAsDataURL(this.files[0]);
+  };
+</script>
 {% endblock %}

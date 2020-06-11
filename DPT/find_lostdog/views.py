@@ -86,6 +86,7 @@ def searchDog(request):
                 results = compare.find_dog_type(image, str(Dogs.tag))
         elif bool(Dogs.tag) == True:
             results = compare._find_dog_type_from_tag(str(Dogs.tag))
+            path = None
 
         print(results)
         for result in results:
@@ -101,8 +102,12 @@ def searchDog(request):
             list_dogtype.append(temp)
             
         print(list_dogtype)
-        first_dog = list_dogtype.pop(0)
-        return render(request, 'find_lostdog/searchDog.html', {'listdogs': list_dogtype, 'first_dog': first_dog, 'form': dogForm})
+        print(dogPath)
+        if(len(list_dogtype) > 0):
+            first_dog = list_dogtype.pop(0)
+        else:
+            first_dog = None
+        return render(request, 'find_lostdog/searchDog.html', {'listdogs': list_dogtype, 'first_dog': first_dog, 'img': dogPath, 'form': dogForm})
     else:
         dogForm = SearchDogForm()
         return render(request, 'find_lostdog/searchDog.html', {'form': dogForm})

@@ -92,25 +92,24 @@
       </div>
     </form>
 
-    <!-- {% if submitbutton == "submit" %} -->
-    <div>
-      <div>
-        <h5>Ket qua test</h5>
-      </div>
-      <div>
-        <h5 class="card-title m-0">anh tai len: {{image_url}}</h5>
-      </div>
-      <div>
-        <h5 class="card-title m-0">bai dang tai len :{{post}}</h5>
-      </div>
-
-    </div>
-    <!-- {% endif %} -->
-
   </div>
 
 </div>
 
+{% if post %}
+<script type=text/javascript>
+  const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+  Toast.fire({
+    type: 'success',
+    title: 'Đã thêm thành công'
+    })
+  </script>
+{% endif %}
 <script>
   document.getElementById("id_dogImage").onchange = function () {
     var reader = new FileReader();

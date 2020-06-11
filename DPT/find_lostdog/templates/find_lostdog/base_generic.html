@@ -19,7 +19,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{% static 'find_lostdog/css/adminlte.min.css' %}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  <style>
+  <link rel="stylesheet" type="text/css" href="{% static 'find_lostdog/css/toastr.min.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'find_lostdog/css/sweetalert2.min.css' %}">
+  <script type="text/javascript" src="{% static 'find_lostdog/js/sweetalert2.min.js' %}"></script>  
+  <script type="text/javascript" src="{% static 'find_lostdog/js/toastr.min.js' %}"></script>  
+<style>
     .bg-img {
       background-image: url('{{ STATIC_URL }}static/find_lostdog/image/paper.jpg');
       background-repeat:no-repeat;
@@ -99,5 +103,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{% static 'find_lostdog/js/bootstrap.bundle.min.js' %}"></script>
 <!-- AdminLTE App -->
 <script src="{% static 'find_lostdog/js/adminlte.min.js' %}"></script>
+
 </body>
 </html>

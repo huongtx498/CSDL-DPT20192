@@ -17,7 +17,11 @@
       <div class="card-body">
         <div class="row">
           <div class="col-md-6">
+            {% if img %}
+            <img id="image" src="{{ img }}" style="height: 150px; width: 150px;"/>
+            {% else %}
             <img id="image" style="height: 150px; width: 150px;"/>
+            {% endif %}
           </div>
           <div class="col-md-6">
             <div class="form-group">
@@ -191,6 +195,19 @@
   </div>
   <!-- /.card -->
 </div>
+{% else %}
+<script type=text/javascript>
+const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+Toast.fire({
+  type: 'error',
+  title: 'Không tìm thấy kết quả'
+  })
+</script>
 {% endif %}
 <script>
   document.getElementById("id_image").onchange = function () {

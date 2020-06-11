@@ -53,7 +53,7 @@
   
 </div>
 
-{% if first_dog %}
+{% if message == "success" %}
 <div class="card card-primary card-outline">
   <div class="card-header">
     <h3 class="card-title">
@@ -195,7 +195,7 @@
   </div>
   <!-- /.card -->
 </div>
-{% else %}
+{% elif message == 'error' %}
 <script type=text/javascript>
 const Toast = Swal.mixin({
       toast: true,

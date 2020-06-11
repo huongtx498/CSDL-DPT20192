@@ -105,9 +105,13 @@ def searchDog(request):
         print(dogPath)
         if(len(list_dogtype) > 0):
             first_dog = list_dogtype.pop(0)
+            message = 'success'
         else:
             first_dog = None
-        return render(request, 'find_lostdog/searchDog.html', {'listdogs': list_dogtype, 'first_dog': first_dog, 'img': dogPath, 'form': dogForm})
+            message = 'error'
+            
+        return render(request, 'find_lostdog/searchDog.html', {'listdogs': list_dogtype, 
+            'first_dog': first_dog, 'img': dogPath, 'message': message, 'form': dogForm})
     else:
         dogForm = SearchDogForm()
         return render(request, 'find_lostdog/searchDog.html', {'form': dogForm})

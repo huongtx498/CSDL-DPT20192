@@ -21,7 +21,7 @@ Model trained: https://drive.google.com/open?id=1r3tIegXiMCtnw6VRnRshKZufhE4SLRx
 ```
 - Create database from sql file
 - Update your informations to database config, class_name path, model_trained path
-- R
+- Run server
 ```sh
 $ python3 manage.py runserver
 ```

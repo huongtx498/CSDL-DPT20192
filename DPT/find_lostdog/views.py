@@ -35,9 +35,11 @@ class Post():
 
 # Create your views here.
 
+# Change to your informations below
 
-modelpath = r'H:\Subject\He co so du lieu da phuong tien\CSDL-DPT20192\DPT\dog_classification_resnet.pth'
-classnamepath = r'H:\Subject\He co so du lieu da phuong tien\CSDL-DPT20192\DPT\class_names.pkl'
+
+modelpath = r'/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/dog_classification_resnet.pth'
+classnamepath = r'/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/class_names.pkl'
 user = 'admin'
 pw = 'mmx1437cbcd'
 url = 'localhost'
@@ -47,11 +49,11 @@ db_name = 'muti_media_db'
 
 
 def getImageByName(dog_type):
-    folder = "media/images/"+dog_type
+    folder = "media/Images/"+dog_type
     images = []
     for i in range(6):
         img = random.choice(os.listdir(folder))
-        img_url = "media/images/"+dog_type+"/"+img
+        img_url = "media/Images/"+dog_type+"/"+img
         images.append(img_url)
     # print(images)
     return images
@@ -69,7 +71,7 @@ def searchDog(request):
         compare = FindDogType(modelpath, classnamepath, user, pw, url, db_name)
         crud_dog = CRUD_Dog(modelpath, classnamepath)
         crud_post = CRUD_Post()
-        
+
         # Lay url anh
         Dogs = Image_db.objects.latest()
 
@@ -100,7 +102,7 @@ def searchDog(request):
             temp["content"] = ldog
             temp["url"] = dogimage
             list_dogtype.append(temp)
-            
+
         print(list_dogtype)
         print(dogPath)
         if(len(list_dogtype) > 0):
@@ -109,9 +111,9 @@ def searchDog(request):
         else:
             first_dog = None
             message = 'error'
-            
-        return render(request, 'find_lostdog/searchDog.html', {'listdogs': list_dogtype, 
-            'first_dog': first_dog, 'img': dogPath, 'message': message, 'form': dogForm})
+
+        return render(request, 'find_lostdog/searchDog.html', {'listdogs': list_dogtype,
+                                                               'first_dog': first_dog, 'img': dogPath, 'message': message, 'form': dogForm})
     else:
         dogForm = SearchDogForm()
         return render(request, 'find_lostdog/searchDog.html', {'form': dogForm})
@@ -168,7 +170,7 @@ def addPost(request):
         # Them post vao csdl Post
         crud_addpost._add_post(user, pw, url, db_name, post, imagePath)
         print(post.spiece+" "+str(post.weights)+" " +
-                str(post.heights)+" "+str(post.time))
+              str(post.heights)+" "+str(post.time))
         print(imagePath)
         return render(request, 'find_lostdog/post.html', {'image_url': imagePath, 'img': img_url, 'post': post, 'form': addForm})
 
@@ -219,7 +221,7 @@ def searchLostDog(request):
 
         # Tao doi tuong searchPost
         searchPost = Post(spiece, weights, heights, colors,
-                            access, area, time, status, type)
+                          access, area, time, status, type)
         crud_addpost = CRUD_Post()
 
         # Them searchPost vao csdl Post

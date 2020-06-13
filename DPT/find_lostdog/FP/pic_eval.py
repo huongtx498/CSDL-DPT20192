@@ -56,8 +56,10 @@ def get_distance(vector_1, vector_2):
     cos_dist = dot / (norm_1 * norm_2)
     return cos_dist
 
+# Change to your model url below
+
 
 class_names = pickle.load(
-    open('/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/class_names.pkl', 'rb'))
+    open(r'/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/class_names.pkl', 'rb'))
 model, extracter = load_model(
-    '/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/dog_classification_resnet.pth', class_names)
+    r'/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/dog_classification_resnet.pth', class_names)

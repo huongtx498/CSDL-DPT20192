@@ -65,6 +65,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+
+            'libraries':{
+            'custom_tag': 'find_lostdog.custom_tag.custom_tag',
+            }
         },
     },
 ]

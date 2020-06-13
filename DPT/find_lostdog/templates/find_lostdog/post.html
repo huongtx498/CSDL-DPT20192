@@ -22,6 +22,11 @@
                 </div>
               </div>
             </div>
+            {% if img %}
+            <img id="image" src="{{ img }}" style="height: 150px; width: 150px;"/>
+            {% else %}
+            <img id="image" style="height: 150px; width: 150px;"/>
+            {% endif %}
           </div>
           <div class="col-md-9">
             <div class="row">
@@ -91,22 +96,35 @@
       </div>
     </form>
 
-    <!-- {% if submitbutton == "submit" %} -->
-    <div>
-      <div>
-        <h5>Ket qua test</h5>
-      </div>
-      <div>
-        <h5 class="card-title m-0">image: {{image}}</h5>
-      </div>
-      <div>
-        <h5 class="card-title m-0">post :{{post}}</h5>
-      </div>
-
-    </div>
-    <!-- {% endif %} -->
-
   </div>
 
 </div>
+
+{% if post %}
+<script type=text/javascript>
+  const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000
+      });
+  Toast.fire({
+    type: 'success',
+    title: 'Đã thêm thành công'
+    })
+  </script>
+{% endif %}
+<script>
+  document.getElementById("id_dogImage").onchange = function () {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        // get loaded data and render thumbnail.
+        document.getElementById("image").src = e.target.result;
+    };
+
+    // read the image file as a data URL.
+    reader.readAsDataURL(this.files[0]);
+  };
+</script>
 {% endblock %}

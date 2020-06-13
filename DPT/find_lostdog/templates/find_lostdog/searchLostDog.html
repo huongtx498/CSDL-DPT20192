@@ -8,7 +8,7 @@
     </div>
     <!-- /.card-header -->
     <!-- form start -->
-    <form role="form" enctype="multipart/form-data" action="" method="">
+    <form role="form" enctype="multipart/form-data" action="" method="post">
       {% csrf_token %}
       <div class="card-body">
         <div class="row">
@@ -22,6 +22,11 @@
                 </div>
               </div>
             </div>
+            {% if img %}
+            <img id="image" src="{{ img }}" style="height: 150px; width: 150px;"/>
+            {% else %}
+            <img id="image" style="height: 150px; width: 150px;"/>
+            {% endif %}
           </div>
           <div class="col-md-9">
             <div class="row">
@@ -93,20 +98,100 @@
 
   <div class="card" id="result">
     <div class="card-header">
-      <h5 class="card-title m-0">Danh sách ảnh</h5>
+      <h5 class="card-title m-0">Danh sách</h5>
     </div>
     <div class="card-body">
-      <div class="row">
-        {% for img in imgs %}
-        <div class="col-sm-2">
-          <a href="" data-toggle="lightbox" data-title="dog-image" data-gallery="gallery">
-            <img src="" class="img-fluid mb-2" alt="dog image">
-          </a>
-        </div>
-        {% endfor %}
-      </div>
+      <table class="table table-striped projects">
+        <thead>
+            <tr>
+                <th style="width: 1%">
+                    #
+                </th>
+                <th style="width: 20%">
+                    Ảnh
+                </th>
+                <th style="width: 10%" class="text-center">
+                    Chủng loại
+                </th>
+                <th style="width: 10%" class="text-center">
+                    Cân nặng
+                </th>
+                <th style="width: 10%" class="text-center">
+                    Chiều cao
+                </th>
+                <th style="width: 10%" class="text-center">
+                  Màu lông
+                </th>
+                <th style="width: 10%" class="text-center">
+                  Phụ kiện
+                </th>
+                <th style="width: 10%" class="text-center">
+                  Khu vực
+                </th>
+                <th style="width: 10%" class="text-center">
+                  Thời gian
+                </th>
+                <th style="width: 10%" class="text-center">
+                  Trạng thái
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in listposts %}
+            <tr>
+                <td>
+                    #
+                </td>
+                <td>
+                    <img src="data:image/png;base64,{{ post.9 }}" class="img-fluid mb-2" alt="dog image">
+                </td>
+                <td>
+                    {{ post.1 }}
+                </td>
+                <td class="project_progress">
+                    {{ post.2 }}
+                </td>
+                <td class="project-state">
+                    {{ post.3 }}
+                </td>
+                <td class="project-actions text-right">
+                    {{ post.4 }}
+                </td>
+                <td class="project-state">
+                    {{ post.5 }}
+                </td>
+                <td class="project-state">
+                    {{ post.6 }}
+                </td>
+                <td class="project-state">
+                    {{ post.7 }}
+                </td>
+                <td class="project-state">
+                    {{ post.8 }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <!-- list post : {{listposts}} -->
     </div>
   </div>
 
 </div>
+
+<script>
+  document.getElementById("id_dogImage").onchange = function () {
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+        // get loaded data and render thumbnail.
+        document.getElementById("image").src = e.target.result;
+    };
+
+    // read the image file as a data URL.
+    reader.readAsDataURL(this.files[0]);
+  };
+</script>
 {% endblock %}

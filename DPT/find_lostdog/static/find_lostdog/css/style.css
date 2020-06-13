@@ -1,0 +1,4 @@
+.nav-tabs.flex-column .nav-item.show .nav-link, .nav-tabs.flex-column .nav-link.active {
+    background-color: #007bff;
+    color: #fff;
+}

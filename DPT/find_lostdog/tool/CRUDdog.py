@@ -22,11 +22,12 @@ class CRUD_Dog():
         try:
             cnx = mysql.connector.connect(user=username, password=pw,
                                           host=url, database=dbname)
-            cursor = cnx.cursor()
-            query = ("SELECT type FROM dog_type")
-            cursor.execute(query)
-            types = [line[0] for line in cursor]
-            self.types = types
+            if cnx.is_connected():
+                cursor = cnx.cursor()
+                query = ("SELECT type FROM dog_type")
+                cursor.execute(query)
+                types = [line[0] for line in cursor]
+                self.types = types
 
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
@@ -35,8 +36,11 @@ class CRUD_Dog():
                 print("Database does not exist")
             else:
                 print(err)
-        else:
-            cnx.close()
+        finally:
+            if (cnx.is_connected()):
+                cursor.close()
+                cnx.close()
+            return types
 
 # Get dog by dog_type
     def _getDogByType(self, username, pw, url, dbname, type):

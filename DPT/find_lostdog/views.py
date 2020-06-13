@@ -86,7 +86,7 @@ def searchDog(request):
                 results = compare.find_dog_type(image, str(Dogs.tag))
         elif bool(Dogs.tag) == True:
             results = compare._find_dog_type_from_tag(str(Dogs.tag))
-            path = None
+            dogPath = None
 
         print(results)
         for result in results:
@@ -170,7 +170,7 @@ def addPost(request):
         print(post.spiece+" "+str(post.weights)+" " +
                 str(post.heights)+" "+str(post.time))
         print(imagePath)
-        return render(request, 'find_lostdog/post.html', {'image_url': imagePath, 'post': post, 'form': addForm})
+        return render(request, 'find_lostdog/post.html', {'image_url': imagePath, 'img': img_url, 'post': post, 'form': addForm})
 
     else:
         addForm = PostForm()
@@ -245,7 +245,7 @@ def searchLostDog(request):
         print(imagePath)
         print(list_posts)
 
-        return render(request, 'find_lostdog/searchLostDog.html', {'searchPost': searchPost, 'listposts': list_all, 'image': simage, 'form': searchLostDogForm})
+        return render(request, 'find_lostdog/searchLostDog.html', {'searchPost': searchPost, 'listposts': list_all, 'img': img_url, 'image': simage, 'form': searchLostDogForm})
 
     else:
         searchLostDogForm = PostForm()

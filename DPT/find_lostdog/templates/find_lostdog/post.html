@@ -22,7 +22,11 @@
                 </div>
               </div>
             </div>
+            {% if img %}
+            <img id="image" src="{{ img }}" style="height: 150px; width: 150px;"/>
+            {% else %}
             <img id="image" style="height: 150px; width: 150px;"/>
+            {% endif %}
           </div>
           <div class="col-md-9">
             <div class="row">

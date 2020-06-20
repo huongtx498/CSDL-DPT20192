@@ -10,7 +10,10 @@ url = 'localhost'
 db_name = 'muti_media_db'
 
 KV = [('Thanh Xuân', 'Thanh Xuân'), ('Hai Bà Trưng', 'Hai Bà Trưng'),
-      ('Cầu Giấy', 'Cầu Giấy'), ('Ba Đình', 'Ba Đình'), ('Tây Hồ', 'Tây Hồ'), ]
+      ('Cầu Giấy', 'Cầu Giấy'), ('Ba Đình', 'Ba Đình'), ('Tây Hồ', 'Tây Hồ'),
+      ('Thanh Trì', 'Thanh Trì'), ('Đống Đa', 'Đống Đa'), ('Hoàng Mai', 'Hoàng Mai'),
+       ('Hoàn Kiếm', 'Hoàn Kiếm'), ('Nam Từ Liêm', 'Nam Từ Liêm'), ('Bắc Từ Liêm', 'Bắc Từ Liêm'),
+       ('Hà Đông','Hà Đông')]
 PK = [('Không', 'Không'), ('Vòng cổ', 'Vòng cổ'),
       ('Xích', 'Xích'), ('Rọ mõm', 'Rọ mõm')]
 TT = [('Khoẻ mạnh', 'Khoẻ mạnh'), ('Bị ốm', 'Bị ốm')]
@@ -18,10 +21,12 @@ MAU = [('Đen', 'Đen'), ('Nâu', 'Nâu'), ('Vàng', 'Vàng'), ('Đỏ', 'Đỏ'
 
 crud_dog = CRUD_Dog(modelpath, classnamepath)._get_all_type(user, pw, url, db_name)
 dog_type = []
+dog_type.append(('Không rõ', 'Không rõ'))
 for dog in crud_dog:
     dog = dog.split("-", 1)[1]
     temp = (dog, dog)
     dog_type.append(temp)    
+
 
 class Image_db(models.Model):
     tag = models.CharField(max_length=50,blank=True, null=True)

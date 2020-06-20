@@ -233,11 +233,9 @@ def searchLostDog(request):
         # print(list_all)
 
         for i in range(0, len(list_all)):
-            # image = list_posts.loc[i]['Image']
-            # simage.append(base64.b64encode(image).decode("utf-8"))
             list_all[i][9] = base64.b64encode(list_all[i][9]).decode("utf-8")
-            # simage = findpost.write_file(image, photo)
-            # simage = Image.open(io.BytesIO(image))
+            if i == 5:
+                break
 
         # print(image)
 
@@ -250,3 +248,13 @@ def searchLostDog(request):
     else:
         searchLostDogForm = PostForm()
         return render(request, 'find_lostdog/searchLostDog.html', {'form': searchLostDogForm})
+
+def listPost(request):
+    findpost = FindPost()
+    list_posts = findpost.get_all_post()
+    list_all = list_posts.values.tolist()
+   
+    for i in range(0, len(list_all)):
+        list_all[i][9] = base64.b64encode(list_all[i][9]).decode("utf-8")
+   
+    return render(request, 'find_lostdog/post_list.html', {'listposts': list_all})

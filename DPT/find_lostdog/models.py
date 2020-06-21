@@ -2,8 +2,8 @@
 from django.db import models
 from .tool.CRUDdog import CRUD_Dog
 
-modelpath = r'/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/dog_classification_resnet.pth'
-classnamepath = r'/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/class_names.pkl'
+modelpath = r'H:\Subject\He co so du lieu da phuong tien\CSDL-DPT20192\DPT\dog_classification_resnet.pth'
+classnamepath = r'H:\Subject\He co so du lieu da phuong tien\CSDL-DPT20192\DPT\class_names.pkl'
 user = 'admin'
 pw = 'mmx1437cbcd'
 url = 'localhost'

@@ -38,8 +38,8 @@ class Post():
 # Change to your informations below
 
 
-modelpath = r'/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/dog_classification_resnet.pth'
-classnamepath = r'/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/class_names.pkl'
+modelpath = r'H:\Subject\He co so du lieu da phuong tien\CSDL-DPT20192\DPT\dog_classification_resnet.pth'
+classnamepath = r'H:\Subject\He co so du lieu da phuong tien\CSDL-DPT20192\DPT\class_names.pkl'
 user = 'admin'
 pw = 'mmx1437cbcd'
 url = 'localhost'
@@ -97,7 +97,7 @@ def searchDog(request):
             dogimage = getImageByName(result)  # Mang 2 hinh anh ket qua
             # list_dogtype += dog   # Dict cua cac loai cho tra ve
             ldog = list(dog[0])
-            ldog[1] = ldog[1].split("-")[1]
+            ldog[1] = ldog[1].split("-", 1)[1]
             temp = {}
             temp["content"] = ldog
             temp["url"] = dogimage
@@ -233,11 +233,10 @@ def searchLostDog(request):
         list_posts = findpost.get_all_post()
         list_all = list_posts.values.tolist()
         # print(list_all)
+        list_all = list_all[0:5]
 
         for i in range(0, len(list_all)):
             list_all[i][9] = base64.b64encode(list_all[i][9]).decode("utf-8")
-            if i == 5:
-                break
 
         # print(image)
 

@@ -2,15 +2,18 @@
 from django.db import models
 from .tool.CRUDdog import CRUD_Dog
 
-modelpath = r'/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/dog_classification_resnet.pth'
-classnamepath = r'/home/trinhhuong/Documents/GitProject/GitHubRepository/CSDL-DPT20192/DPT/find_lostdog/tool/class_names.pkl'
+modelpath = r'H:\Subject\He co so du lieu da phuong tien\CSDL-DPT20192\DPT\dog_classification_resnet.pth'
+classnamepath = r'H:\Subject\He co so du lieu da phuong tien\CSDL-DPT20192\DPT\class_names.pkl'
 user = 'admin'
 pw = 'mmx1437cbcd'
 url = 'localhost'
 db_name = 'muti_media_db'
 
 KV = [('Thanh Xuân', 'Thanh Xuân'), ('Hai Bà Trưng', 'Hai Bà Trưng'),
-      ('Cầu Giấy', 'Cầu Giấy'), ('Ba Đình', 'Ba Đình'), ('Tây Hồ', 'Tây Hồ'), ]
+      ('Cầu Giấy', 'Cầu Giấy'), ('Ba Đình', 'Ba Đình'), ('Tây Hồ', 'Tây Hồ'),
+      ('Thanh Trì', 'Thanh Trì'), ('Đống Đa', 'Đống Đa'), ('Hoàng Mai', 'Hoàng Mai'),
+       ('Hoàn Kiếm', 'Hoàn Kiếm'), ('Nam Từ Liêm', 'Nam Từ Liêm'), ('Bắc Từ Liêm', 'Bắc Từ Liêm'),
+       ('Hà Đông','Hà Đông')]
 PK = [('Không', 'Không'), ('Vòng cổ', 'Vòng cổ'),
       ('Xích', 'Xích'), ('Rọ mõm', 'Rọ mõm')]
 TT = [('Khoẻ mạnh', 'Khoẻ mạnh'), ('Bị ốm', 'Bị ốm')]
@@ -20,10 +23,12 @@ MAU = [('Đen', 'Đen'), ('Nâu', 'Nâu'), ('Vàng', 'Vàng'),
 crud_dog = CRUD_Dog(modelpath, classnamepath)._get_all_type(
     user, pw, url, db_name)
 dog_type = []
+dog_type.append(('Không rõ', 'Không rõ'))
 for dog in crud_dog:
     dog = dog.split("-", 1)[1]
     temp = (dog, dog)
     dog_type.append(temp)
+
 
 
 class Image_db(models.Model):

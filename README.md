@@ -1,14 +1,21 @@
 # CSDL-DPT
 
 - Cơ sở dữ liệu đa phương tiện - 20192
+- require python version <= 3.7
 
 ## Install dependency
-
+* Make new python env
 ```sh
-$ pip3 install mysql-connector-python
+$ py -m venv CSDLDPT
 ```
+* Active enviroment (on Window)
 ```sh
-$ pip3 install django  
+$ CSDLDPT\Scrpits\Active.bat 
+```
+* Clone repositori and put it to env folder
+* Install dependency
+```sh
+$ pip install -r requirements.txt 
 ```
 
 ## Config
